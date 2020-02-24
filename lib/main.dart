@@ -7,14 +7,42 @@ void main() => runApp(MaterialApp(
     // When navigating to the "/" route, build the FirstScreen widget.
     '/': (context) => MyApp(),
     // When navigating to the "/second" route, build the SecondScreen widget.
-    '/second': (context) => SecondRoute(),
+    '/second': (context) => TabBarDemo(),
   },
 ));
 
 
+class TabBarDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.directions_car)),
+                Tab(icon: Icon(Icons.directions_transit)),
+                Tab(icon: Icon(Icons.directions_bike)),
+              ],
+            ),
+            title: Text('Menú Tabs'),
+          ),
+          body: TabBarView(
+            children: [
+              FirstTab(),
+              Icon(Icons.directions_transit),
+              Icon(Icons.directions_bike),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
-
-class SecondRoute extends StatelessWidget {
+class TabsRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,13 +62,10 @@ class SecondRoute extends StatelessWidget {
   }
 }
 
-
-
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double c_width = MediaQuery.of(context).size.width*0.5;
+    double c_width = MediaQuery.of(context).size.width*0.8;
 
     return Container(
       padding: EdgeInsets.all(16.0),
@@ -51,13 +76,13 @@ class MyApp extends StatelessWidget {
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("My first Flutter APP ", style: TextStyle(fontSize:12, color: Color(0xFFffffff),decoration: TextDecoration.none)),
+            Text("My first Flutter APP ", style: TextStyle(fontSize:21, color: Color(0xFFffffff),decoration: TextDecoration.none)),
             RaisedButton(
                 child: Text('Go to taps'),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SecondRoute()),
+                    MaterialPageRoute(builder: (context) => TabBarDemo()),
                   );
                 })
           ],
@@ -67,3 +92,31 @@ class MyApp extends StatelessWidget {
 
   }
 }
+
+class FirstTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("My first Flutter APP ", style: TextStyle(fontSize:21, color: Color(0xFFffffff),decoration: TextDecoration.none)),
+            RaisedButton(
+                child: Text('Go to taps'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyApp()),
+                  );
+                })
+          ],
+        ),
+      ),
+    );
+
+  }
+  }
